@@ -34,11 +34,39 @@ Dates accept an ISO timestamp, or a relative value such as `30m`, `24h` or `7d`.
 
 ## Statistics
 
+View community, role and server statistics:
+
 ```bash
+mcid-cli stats members
 mcid-cli stats members --server "Micro Club"
 mcid-cli stats growth --period 90d
-mcid-cli stats export --type growth --file growth.csv
+mcid-cli stats growth --server "Micro Club" --period 1y
+mcid-cli stats roles --server "Micro Club"
+mcid-cli stats servers
+mcid-cli stats overlap
 ```
+
+- `members` shows member statistics, optionally scoped to a server.
+- `growth` displays membership growth over time. Supported periods are `30d`, `90d` and `1y`.
+- `roles` shows role distribution and member counts for a specific server.
+- `servers` compares servers by member count, role count and synchronization status.
+- `overlap` returns cross-server member overlap statistics as JSON.
+
+Use `--json` with `members`, `growth`, `roles` or `servers` for machine-readable output.
+
+### Export statistics
+
+```bash
+mcid-cli stats export
+mcid-cli stats export --type growth --file growth.csv
+mcid-cli stats export --type roles --server "Micro Club" --file roles.csv
+mcid-cli stats export --type servers --file servers.csv
+mcid-cli stats export --type cross-server --file overlap.csv
+```
+
+Supported report types are `members`, `growth`, `roles`, `servers` and `cross-server`. The default report type is `members`, and the default output format is CSV.
+
+Use `--server` to scope an export to a specific server. It is required for `roles` reports. The CLI generates a filename using the report type and current date by default. Use `--file` to choose a destination and `--force` to overwrite an existing file.
 
 ## Settings
 
